@@ -12,7 +12,7 @@ ap.add_argument("-s", "--segments", required=False,
     default ='D:\\datas\\SON\\OUAKAM_AVRIL_MAI_2018\\2018-05\\SEGMENTS' )
 ap.add_argument("-f", "--freq", required=False,
 	help="frequency of sampling for the audio samples",
-    default =0.8 )
+    default =44100)
 args = vars(ap.parse_args())
 
 prepare_dataset(args['path'],
