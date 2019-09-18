@@ -53,8 +53,12 @@ def visualize_one_recording(directory,display=False):
                 continue
             if(filename=='output_labels'):
                 continue
+            if(filename=='train'):
+                continue
+            if(filename=='val'):
+                continue
             tmp_file = pd.read_csv(os.path.join(directory,file))
-            # print(filename)
+            # print(tmp_file)
             tab_fish[ind]=tmp_file['fish_activity']
             tab_click[ind]=tmp_file['click_activity']
             ind +=1

@@ -81,8 +81,9 @@ def sep_filename_and_ext(file):
     filename = file_sep[:len(file_sep)-1][0]
     return(filename,ext)
 
-def prepare_dataset(directory,segmentdirectory,subnframes):
+def prepare_dataset(directory,type,segmentdirectory,subnframes):
     ##TODO : decompose and save all wav file in a directory and then parse and write CSV for each
+    assert (type=='train' or type =='test')
     try :
         os.mkdir(os.path.join(directory,'prepared_dataset'))
     except FileExistsError:
@@ -94,7 +95,8 @@ def prepare_dataset(directory,segmentdirectory,subnframes):
                 print('file {} passed'.format(file))
                 continue
             nframes =decompose_and_save_wav(root,filename,subnframes)
-            parse_segmentations_and_write_csv(segmentdirectory,os.path.join(directory,filename),filename,subnframes,nframes)
+            if type=='train':
+                parse_segmentations_and_write_csv(segmentdirectory,os.path.join(directory,filename),filename,subnframes,nframes)
             os.system('move {} {}'.format(os.path.join(directory,filename),os.path.join(directory,'prepared_dataset')))
         break
     print('Finished preparing dataset')
