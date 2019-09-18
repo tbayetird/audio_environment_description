@@ -149,10 +149,27 @@ def fusionAllLabels(dir1):
         break
     return labels
 
-def prepareLabels(dir,train_frac,val_frac):
-    labels = fusionAllLabels(dir)
-    labels.to_csv(os.path.join(dir,'0.features','labels.csv'))
-    train = labels.sample(frac=train_frac)
-    train.to_csv(os.path.join(dir,'0.features','train.csv'))
-    val = labels.sample(frac=val_frac)
-    val.to_csv(os.path.join(dir,'0.features','val.csv'))
+def getAllIDs(path):
+    listIDs=[]
+    for root,dir,files in os.walk(path):
+        for file in files:
+            filename,ext = sep_filename_and_ext(file)
+            if ext==('data'):
+                listIDs.append(filename.replace('_mel',''))
+    return listIDs
+
+def prepareLabels(dir,type,train_frac,val_frac):
+    assert(type=='test' or type=='train')
+    if type=='train':
+        labels = fusionAllLabels(dir)
+        labels.to_csv(os.path.join(dir,'0.features','labels.csv'))
+        train = labels.sample(frac=train_frac)
+        train.to_csv(os.path.join(dir,'0.features','train.csv'))
+        val = labels.sample(frac=val_frac)
+        val.to_csv(os.path.join(dir,'0.features','val.csv'))
+    if type == 'test':
+        listIDs = getAllIDs(os.path.join(dir,'0.features'))
+        listValues = [0 for a in listIDs]
+        data ={'filenames':listIDs, 'value':listValues}
+        labels = pd.DataFrame(data = data)
+        labels.to_csv(os.path.join(dir,'0.features','labels.csv'))

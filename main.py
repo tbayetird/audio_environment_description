@@ -86,11 +86,23 @@ model = gen_model((51,96,1))
 opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 model.summary()
 model.compile(optimizer=opt,loss ='binary_crossentropy' , metrics=['accuracy'])
-epochs=200
+epochs=15
 hist = model.fit_generator(test_patch_gen,
                             validation_data=val_patch_gen,
                             epochs=epochs,
                             )
+
+# Saving model
+dir = os.path.dirname(os.path.abspath(__file__))
+dir=os.path.join(dir,'models')
+# serialize model to JSON
+model_json = model.to_json()
+with open(os.path.join(dir,"model.json"), "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+model.save_weights(os.path.join(dir,"model_weights.h5"))
+model.save(os.path.join(dir,"model.h5"))
+print("Saved model to disk")
 
 
 history_dict = hist.history

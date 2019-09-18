@@ -7,6 +7,9 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--path", required=False,
 	help="path to the directory where we need to prepare data. Should be the one that contains all the folders for individuals recordings ",
     default ='D:\\datas\\SON\\OUAKAM_AVRIL_MAI_2018\\2018-05\\prepared_dataset' )
+ap.add_argument("-ty", "--type", required=False,
+	help="type of operation thata the dataset will be submitted to - default is 'train', other option is 'test' ",
+    default ='train' )
 ap.add_argument("-n", "--name", required=False,
 	help="name of the directory that will be created to store the features. Should not already exists ",
     default ='0.features' )
@@ -24,5 +27,6 @@ customGenerateFeatureData(args['path'],
                           args['name']
                         )
 prepareLabels(args['path'],
+			  args['type'],
               args['train'],
               args['val'])
