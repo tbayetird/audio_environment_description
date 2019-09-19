@@ -170,6 +170,6 @@ def prepareLabels(dir,type,train_frac,val_frac):
     if type == 'test':
         listIDs = getAllIDs(os.path.join(dir,'0.features'))
         listValues = [0 for a in listIDs]
-        data ={'filenames':listIDs, 'value':listValues}
+        data ={'filename':listIDs, 'fish_activity':listValues}
         labels = pd.DataFrame(data = data)
         labels.to_csv(os.path.join(dir,'0.features','labels.csv'))

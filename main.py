@@ -86,7 +86,7 @@ model = gen_model((51,96,1))
 opt = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 model.summary()
 model.compile(optimizer=opt,loss ='binary_crossentropy' , metrics=['accuracy'])
-epochs=15
+epochs=150
 hist = model.fit_generator(test_patch_gen,
                             validation_data=val_patch_gen,
                             epochs=epochs,
