@@ -21,6 +21,10 @@ def load_audio_file(file_path):
     data = np.reshape(data,[-1,1])
     return data
 
+def getSamplingRate(file_path):
+    data,sr = soundfile.read(file=file_path)
+    return sr
+
 def save_tensor(var,outPath,name,suffix):
     assert os.path.isdir(outPath), "path to save the tensor does not exist : {}".format(outPath)
     var.tofile(os.path.join(outPath,name).replace('.wav',suffix + '.data'))

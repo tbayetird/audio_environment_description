@@ -11,7 +11,7 @@ ap.add_argument("-t", "--type", required=False,
 	help="type of treatment : 'train' will also prepare labels, 'test' will only set up the dataset",
     default ='train' )
 ap.add_argument("-s", "--segments", required=False,
-	help="path to the segmentation data that will be used for labelling our data ",
+	help="path to the segmentation data that will be used for labelling our data - should only be used if type is train ",
     default ='D:\\datas\\SON\\OUAKAM_AVRIL_MAI_2018\\2018-05\\SEGMENTS' )
 ap.add_argument("-f", "--freq", required=False,
 	help="frequency of sampling for the audio samples",
@@ -21,4 +21,4 @@ args = vars(ap.parse_args())
 prepare_dataset(args['path'],
 				args['type'],
                 args['segments'],
-                args['freq'])
+                int(args['freq']))
