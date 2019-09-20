@@ -130,3 +130,31 @@ def visualize_one_tensor(tensor_path,title=None,label=None):
         plt.text(0,-4,label)
     plt.show()
     # print(tensor)
+
+def visualize_all_from_labels(csv_path,
+                              filenames='filename',
+                              column='fish_activity'):
+    labels = pd.read_csv(csv_path)
+    df = labels[[filenames,column]]
+    ## extract the datas file per file using filenames
+    size = len(df)
+    current_filename = df.iloc[0,0]
+    current_filename=current_filename.split('_')[0]
+    ind = 0
+    tmp_tab = []
+    pct_tab=[]
+    while(ind < size):
+        tmp_filename = df.iloc[ind,0].split('_')[0]
+        if tmp_filename==current_filename:
+            tmp_tab.append(df.iloc[ind,1])
+        else:
+            pct_tab.append(sum(tmp_tab)/len(tmp_tab))
+            current_filename = tmp_filename
+            tmp_tab=[]
+        ind +=1
+    fig,(ax1,ax2,) = plt.subplots(2,1)
+    ax1.plot(pct_tab)
+    ax1.set_title('percentage of fish activity for each 2 min. samples')
+    plot_activity(pct_tab,ax2,fig,142)
+    fig.tight_layout()
+    plt.show()
