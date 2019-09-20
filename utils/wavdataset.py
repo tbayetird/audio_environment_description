@@ -112,7 +112,7 @@ def generateFeaturesData(sourceDir,outDir):
     for f in audio_files_list:
         genFeatures(os.path.join(sourceDir,f),outDir,f,'_mel')
 
-def customGenerateFeatureData(sourceDir,outDir):
+def customGenerateFeatureData(sourceDir,outDir,sr):
     os.mkdir(os.path.join(sourceDir,outDir))
     for root,dirs,files in os.walk(sourceDir):
         for dir in dirs:
@@ -120,7 +120,7 @@ def customGenerateFeatureData(sourceDir,outDir):
                 audio_files_list=[f for f in subfiles if f.endswith('.wav')]
                 break
             for f in audio_files_list:
-                genFeatures(os.path.join(sourceDir,dir,f),os.path.join(sourceDir,outDir),f,'_mel')
+                genFeatures(os.path.join(sourceDir,dir,f),os.path.join(sourceDir,outDir),f,'_mel',sr)
         break
 
 def labelsFusion(pd1,pd2):

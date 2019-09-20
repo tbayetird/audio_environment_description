@@ -10,15 +10,16 @@ import matplotlib.pyplot as plt
 from .wavutils import load_audio_file, save_tensor
 
 # returns the mel spectrogram of the input audio
-def get_mel_spectrogram(audio):
+def get_mel_spectrogram(audio,sr):
     eps=2.220446049250313e-16
 
     audio = audio.reshape([1,-1])
+    ms = int(0.04*sr) #40ms at 44100 Hz
     window = scipy.signal.hamming(
-                                1764, #40ms at 44100 Hz
+                                ms,
                                 sym=False
                                 )
-    mel_basis = librosa.filters.mel(sr=44100,
+    mel_basis = librosa.filters.mel(sr=sr,
                                     n_fft=2048,
                                     n_mels=96,
                                     fmin=100,
@@ -27,13 +28,15 @@ def get_mel_spectrogram(audio):
                                     norm=None
                                     )
     feature_matrix = np.empty((0,96))
+    hop_length = int(sr/50)
     stft = librosa.stft(audio[0,:]+eps,
                             n_fft=2048,
-                            win_length=1764,
-                            hop_length=882,
+                            win_length=ms,
+                            hop_length=hop_length,
                             center=True,
                             window=window
                             )
+    # print("stft shape : {}".format(stft.shape))
     spectrogram = np.abs(stft)**2
     mel_spectrogram = np.dot(mel_basis,spectrogram)
     mel_spectrogram = mel_spectrogram.T
@@ -41,8 +44,9 @@ def get_mel_spectrogram(audio):
     feature_matrix = np.append(feature_matrix,mel_spectrogram,axis=0)
     return feature_matrix
 
-def genFeatures(filePath,outPath,name,suffixe):
-    mel_spec = get_mel_spectrogram(load_audio_file(filePath))
+def genFeatures(filePath,outPath,name,suffixe,sr):
+    mel_spec = get_mel_spectrogram(load_audio_file(filePath),sr)
+    # print('generated feature of shape {}'.format(mel_spec.shape))
     save_tensor(mel_spec,
                 outPath,
                 name,

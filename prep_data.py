@@ -19,12 +19,16 @@ ap.add_argument("-t", "--train", required=False,
 ap.add_argument("-v", "--val", required=False,
 	help="fraction of the features to use as validation data. 0<=val<=1 . Default is 0.2",
     default =0.2 )
+ap.add_argument("-f", "--freq", required=False,
+	help="frequency of sampling for the audio samples",
+    default =44100)
 args = vars(ap.parse_args())
 
 
 
 customGenerateFeatureData(args['path'],
-                          args['name']
+                          args['name'],
+						  int(args['freq'])
                         )
 prepareLabels(args['path'],
 			  args['type'],
