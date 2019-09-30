@@ -155,6 +155,6 @@ def visualize_all_from_labels(csv_path,
     fig,(ax1,ax2,) = plt.subplots(2,1)
     ax1.plot(pct_tab)
     ax1.set_title('percentage of fish activity for each 2 min. samples')
-    plot_activity(pct_tab,ax2,fig,142)
+    plot_activity(pct_tab,ax2,fig,144)
     fig.tight_layout()
     plt.show()

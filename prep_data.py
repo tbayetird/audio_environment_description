@@ -1,4 +1,6 @@
 from utils.wavdataset import  customGenerateFeatureData, prepareLabels
+from datetime import datetime
+startTime = datetime.now()
 import argparse
 import os
 
@@ -34,3 +36,5 @@ prepareLabels(args['path'],
 			  args['type'],
               args['train'],
               args['val'])
+
+print('durée d\'exécution : {}'.format(datetime.now() - startTime))

@@ -1,4 +1,6 @@
 from utils.wavdataset import prepare_dataset
+from datetime import datetime
+startTime = datetime.now()
 import argparse
 import os
 
@@ -22,3 +24,5 @@ prepare_dataset(args['path'],
 				args['type'],
                 args['segments'],
                 int(args['freq']))
+
+print('durée d\'exécution : {}'.format(datetime.now() - startTime))

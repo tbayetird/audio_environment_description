@@ -1,3 +1,6 @@
+from datetime import datetime
+startTime = datetime.now()
+
 from utils import wavvisualisation as wv
 import argparse
 
@@ -10,3 +13,5 @@ feature_dir = args['path']
 
 
 wv.visualize_all_from_labels(args['path'])
+
+print(datetime.now() - startTime)
