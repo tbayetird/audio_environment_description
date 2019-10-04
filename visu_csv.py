@@ -11,7 +11,6 @@ ap.add_argument("-p", "--path", required=False,
 args = vars(ap.parse_args())
 feature_dir = args['path']
 
-
 wv.visualize_all_from_labels(args['path'])
 
 print(datetime.now() - startTime)

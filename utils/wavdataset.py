@@ -95,10 +95,13 @@ def prepare_dataset(directory,type,segmentdirectory,subnframes):
                 print('file {} passed'.format(file))
                 continue
             try :
-                nframes =decompose_and_save_wav(root,filename,subnframes)
+                if filename=='':
+                    print('Warning : some files are hidden, and will not be treated')
+                else:
+                    nframes =decompose_and_save_wav(root,filename,subnframes)
             except EOFError:
-                printf('file {} raised an error, no data will be generated'.format(filename))
-            if type=='train':
+                print('file {} raised an error, no data will be generated'.format(filename))
+            if type=='train' and filename !='':
                 parse_segmentations_and_write_csv(segmentdirectory,os.path.join(directory,filename),filename,subnframes,nframes)
             os.system('move {} {}'.format(os.path.join(directory,filename),os.path.join(directory,'prepared_dataset')))
         break
